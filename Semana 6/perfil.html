@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil do Personagem - Queirós</title>
+    <style>
+    /* VARIÁVEIS CSS - Paleta de cores baseada no tema medieval */
+    :root {
+      --cor-pedra: #d1b17a; /* Cor principal das pedras/texturas */
+      --cor-pedra-clara: #e4cfa0; /* Variação mais clara da pedra */
+      --cor-telhado: #c56a45; /* Cor do telhado/tijolo */
+      --cor-telhado-escuro: #a3452f; /* Telhado mais escuro */
+      --cor-escuro: #2e2e2e; /* Cor de texto principal */
+      --cor-sombra: rgba(0, 0, 0, 0.8); /* Sombra padrão */
+    }
+
+    /* RESET BÁSICO - Remove margens e paddings padrão */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ESTILOS GLOBAIS - Configurações gerais do corpo da página */
+    body {
+      background: url("imagens/cidade_do_espantalho.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: var(--cor-escuro);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      line-height: 1.6; /* Melhora a legibilidade */
+    }
+
+    /* CONTAINER PRINCIPAL - Estrutura principal do perfil */
+    .perfil-container {
+      background: var(--cor-pedra-clara);
+      border: 8px solid var(--cor-telhado-escuro);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 95%;
+      padding: 25px;
+      box-shadow: 0 0 35px var(--cor-sombra);
+      backdrop-filter: blur(3px);
+      transition: transform 0.3s ease; /* Animação suave ao interagir */
+    }
+
+    /* EFEITO HOVER NO CONTAINER - Leve aumento ao passar o mouse */
+    .perfil-container:hover {
+      transform: scale(1.02);
+    }
+
+    /* TÍTULOS - Estilo para h1 e h2 */
+    h1, h2 {
+      text-align: center;
+      color: var(--cor-telhado-escuro);
+      text-shadow: 2px 2px 0px var(--cor-pedra);
+      font-family: "Cinzel", serif;
+      margin-bottom: 20px;
+    }
+
+    /* SEÇÃO PERSONAGEM E ARMA - Container flexível para cards */
+    .personagem-armas {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    /* CARDS - Estilo para cards de personagem e arma */
+    .card {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: inset 0 0 12px var(--cor-sombra);
+      min-width: 160px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animação suave */
+    }
+
+    /* EFEITO HOVER NOS CARDS - Elevação e sombra mais forte */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--cor-sombra);
+    }
+
+    /* IMAGENS DOS CARDS - Estilo para fotos do personagem e arma */
+    .card img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: contain;
+    }
+
+    /* SEÇÃO CLASSES - Container para lista de classes */
+    .classes {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+    }
+
+    /* LISTA DE CLASSES - Estilo da lista sem marcadores */
+    .classes ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .classes li {
+      font-size: 18px;
+      margin: 8px 0;
+      transition: color 0.3s ease; /* Transição suave para hover */
+    }
+
+    /* EFEITO HOVER NAS CLASSES - Destaque ao passar o mouse */
+    .classes li:hover {
+      color: var(--cor-telhado);
+    }
+
+    /* NÍVEIS DAS CLASSES - Destaque para os níveis */
+    .classes span {
+      font-weight: bold;
+      color: var(--cor-telhado-escuro);
+    }
+
+    /* SEÇÃO MEDALHAS - Container para grid de medalhas */
+    .medalhas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+      margin-bottom: 25px;
+    }
+
+    /* GRID DE MEDALHAS - Layout em 4 colunas */
+    .medalhas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    /* SLOT DE MEDALHA - Container individual para cada medalha */
+    .medalha-slot {
+      width: 80px;
+      height: 80px;
+      background: var(--cor-pedra-clara);
+      border: 3px solid var(--cor-telhado-escuro);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 8px var(--cor-sombra);
+      transition: transform 0.3s ease; /* Animação suave */
+    }
+
+    /* EFEITO HOVER NAS MEDALHAS - Rotação sutil */
+    .medalha-slot:hover {
+      transform: rotate(5deg);
+    }
+
+    /* IMAGENS DAS MEDALHAS - Estilo para as medalhas */
+    .medalha-slot img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    /* SEÇÃO CARTAS - Container para a sequência de cartas */
+    .cartas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+    }
+
+    .cartas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    .carta-slot {
+      display: flex;
+      align-items: center;
+      min-width: 200px; /* Aumentado para suportar textos mais longos */
+      text-align: left;
+    }
+
+    .carta {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--cor-escuro);
+      padding: 8px;
+      background: var(--cor-pedra-clara);
+      border: 2px solid var(--cor-telhado-escuro);
+      border-radius: 5px;
+      word-wrap: break-word; /* Permite quebra de linha para textos longos */
+      width: 100%; /* Ocupa o espaço disponível no slot */
+    }
+
+    /* CAMPO RETANGULAR ADICIONAL */
+    .retangulo-adicional {
+      width: 100%;
+      height: 100px;
+      background: var(--cor-pedra-clara);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: var(--cor-escuro);
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+      margin-top: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .retangulo-adicional:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--cor-sombra);
+    }
+
+    /* MEDIA QUERIES - Ajustes para responsividade */
+    @media (max-width: 768px) {
+      .medalhas-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cartas-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        min-width: 120px;
+      }
+
+      .card img {
+        max-width: 120px;
+        max-height: 120px;
+      }
+
+      .perfil-container {
+        padding: 15px;
+      }
+
+      .carta-slot {
+        min-width: 150px; /* Ajuste para telas menores */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .medalhas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cartas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .personagem-armas {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .carta-slot {
+        min-width: 100%; /* Ocupa toda a largura em telas pequenas */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile">
+    <h1>Boss Queirós</h1>
+
+    <!-- Medalhas -->
+    <div class="medals">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_57.png" alt="Medalha 1">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_53.png" alt="Medalha 2">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_50.png" alt="Medalha 3">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_44.png" alt="Medalha 4">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_40.png" alt="Medalha 5">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_28.png" alt="Medalha 6">
+      <img src="ChatGPT Image 29 de set. de 2025, 18_25_13.png" alt="Medalha 7">
+    </div>
+
+    <div class="images">
+      <div>
+        <h3>Personagem</h3>
+        <img src="boneca_queiroz.png" alt="Personagem">
+      </div>
+      <div>
+        <h3>Arma</h3>
+        <img src="arma_queiroz.png" alt="Arma">
+      </div>
+    </div>
+
+    <h2>Cartas e Valores</h2>
+    <table>
+      <tr><th>Carta</th><th>Valor</th></tr>
+      <tr><td>Ás</td><td><input type="text" value="11"></td></tr>
+      <tr><td>2</td><td><input type="text" value="3"></td></tr>
+      <tr><td>3</td><td><input type="text" value="11"></td></tr>
+      <tr><td>4</td><td><input type="text" value="3"></td></tr>
+      <tr><td>5</td><td><input type="text" value="11"></td></tr>
+      <tr><td>6</td><td><input type="text" value="3"></td></tr>
+      <tr><td>7</td><td><input type="text" value="6"></td></tr>
+      <tr><td>8</td><td><input type="text" value="0"></td></tr>
+      <tr><td>9</td><td><input type="text" value="6"></td></tr>
+      <tr><td>10</td><td><input type="text" value="0"></td></tr>
+      <tr><td>J</td><td><input type="text" placeholder="Defina"></td></tr>
+      <tr><td>Q</td><td><input type="text" placeholder="Carta especial"></td></tr>
+      <tr><td>K</td><td><input type="text" placeholder="Defina"></td></tr>
+    </table>
+
+    <div class="signature">Assinatura: Queirós</div>
+  </div>
+</body>
+</html>

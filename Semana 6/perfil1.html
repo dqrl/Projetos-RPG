@@ -1,0 +1,384 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Aventureiro</title>
+  <style>
+    /* VARIÁVEIS CSS - Paleta de cores baseada no tema medieval */
+    :root {
+      --cor-pedra: #d1b17a; /* Cor principal das pedras/texturas */
+      --cor-pedra-clara: #e4cfa0; /* Variação mais clara da pedra */
+      --cor-telhado: #c56a45; /* Cor do telhado/tijolo */
+      --cor-telhado-escuro: #a3452f; /* Telhado mais escuro */
+      --cor-escuro: #2e2e2e; /* Cor de texto principal */
+      --cor-sombra: rgba(0, 0, 0, 0.8); /* Sombra padrão */
+    }
+
+    /* RESET BÁSICO - Remove margens e paddings padrão */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ESTILOS GLOBAIS - Configurações gerais do corpo da página */
+    body {
+      background: url("imagens/cidade_do_espantalho.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: var(--cor-escuro);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      line-height: 1.6; /* Melhora a legibilidade */
+    }
+
+    /* CONTAINER PRINCIPAL - Estrutura principal do perfil */
+    .perfil-container {
+      background: var(--cor-pedra-clara);
+      border: 8px solid var(--cor-telhado-escuro);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 95%;
+      padding: 25px;
+      box-shadow: 0 0 35px var(--cor-sombra);
+      backdrop-filter: blur(3px);
+      transition: transform 0.3s ease; /* Animação suave ao interagir */
+    }
+
+    /* EFEITO HOVER NO CONTAINER - Leve aumento ao passar o mouse */
+    .perfil-container:hover {
+      transform: scale(1.02);
+    }
+
+    /* TÍTULOS - Estilo para h1 e h2 */
+    h1, h2 {
+      text-align: center;
+      color: var(--cor-telhado-escuro);
+      text-shadow: 2px 2px 0px var(--cor-pedra);
+      font-family: "Cinzel", serif;
+      margin-bottom: 20px;
+    }
+
+    /* SEÇÃO PERSONAGEM E ARMA - Container flexível para cards */
+    .personagem-armas {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    /* CARDS - Estilo para cards de personagem e arma */
+    .card {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: inset 0 0 12px var(--cor-sombra);
+      min-width: 160px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animação suave */
+    }
+
+    /* EFEITO HOVER NOS CARDS - Elevação e sombra mais forte */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--cor-sombra);
+    }
+
+    /* IMAGENS DOS CARDS - Estilo para fotos do personagem e arma */
+    .card img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: contain;
+    }
+
+    /* SEÇÃO CLASSES - Container para lista de classes */
+    .classes {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+    }
+
+    /* LISTA DE CLASSES - Estilo da lista sem marcadores */
+    .classes ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .classes li {
+      font-size: 18px;
+      margin: 8px 0;
+      transition: color 0.3s ease; /* Transição suave para hover */
+    }
+
+    /* EFEITO HOVER NAS CLASSES - Destaque ao passar o mouse */
+    .classes li:hover {
+      color: var(--cor-telhado);
+    }
+
+    /* NÍVEIS DAS CLASSES - Destaque para os níveis */
+    .classes span {
+      font-weight: bold;
+      color: var(--cor-telhado-escuro);
+    }
+
+    /* SEÇÃO MEDALHAS - Container para grid de medalhas */
+    .medalhas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+      margin-bottom: 25px;
+    }
+
+    /* GRID DE MEDALHAS - Layout em 4 colunas */
+    .medalhas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    /* SLOT DE MEDALHA - Container individual para cada medalha */
+    .medalha-slot {
+      width: 80px;
+      height: 80px;
+      background: var(--cor-pedra-clara);
+      border: 3px solid var(--cor-telhado-escuro);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 8px var(--cor-sombra);
+      transition: transform 0.3s ease; /* Animação suave */
+    }
+
+    /* EFEITO HOVER NAS MEDALHAS - Rotação sutil */
+    .medalha-slot:hover {
+      transform: rotate(5deg);
+    }
+
+    /* IMAGENS DAS MEDALHAS - Estilo para as medalhas */
+    .medalha-slot img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    /* SEÇÃO CARTAS - Container para a sequência de cartas */
+    .cartas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+    }
+
+    .cartas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    .carta-slot {
+      display: flex;
+      align-items: center;
+      min-width: 200px; /* Aumentado para suportar textos mais longos */
+      text-align: left;
+    }
+
+    .carta {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--cor-escuro);
+      padding: 8px;
+      background: var(--cor-pedra-clara);
+      border: 2px solid var(--cor-telhado-escuro);
+      border-radius: 5px;
+      word-wrap: break-word; /* Permite quebra de linha para textos longos */
+      width: 100%; /* Ocupa o espaço disponível no slot */
+    }
+
+    /* CAMPO RETANGULAR ADICIONAL */
+    .retangulo-adicional {
+      width: 100%;
+      height: 100px;
+      background: var(--cor-pedra-clara);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: var(--cor-escuro);
+      box-shadow: inset 0 0 10px var(--cor-sombra);
+      margin-top: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .retangulo-adicional:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--cor-sombra);
+    }
+
+    /* MEDIA QUERIES - Ajustes para responsividade */
+    @media (max-width: 768px) {
+      .medalhas-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cartas-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        min-width: 120px;
+      }
+
+      .card img {
+        max-width: 120px;
+        max-height: 120px;
+      }
+
+      .perfil-container {
+        padding: 15px;
+      }
+
+      .carta-slot {
+        min-width: 150px; /* Ajuste para telas menores */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .medalhas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cartas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .personagem-armas {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .carta-slot {
+        min-width: 100%; /* Ocupa toda a largura em telas pequenas */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- CONTAINER PRINCIPAL - Toda a estrutura do perfil fica aqui -->
+  <div class="perfil-container">
+    <!-- CABEÇALHO - Título principal do perfil -->
+    <h1>Perfil do Aventureiro</h1>
+
+    <!-- SEÇÃO PERSONAGEM + ARMA - Apresentação visual do personagem -->
+    <div class="personagem-armas">
+      <!-- CARD DO PERSONAGEM - Foto e nome do aventureiro -->
+      <div class="card">
+        <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/boneca_queiroz.png" alt="Maria Queirós">
+        <p>Maria Queirós</p>
+      </div>
+     
+      <!-- CARD DA ARMA - Equipamento principal do personagem -->
+      <div class="card">
+        <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/arma_queiroz.png" alt="Arma">
+        <p>Arco Angelical</p>
+      </div>
+    </div>
+
+    <!-- SEÇÃO CLASSES - Lista de classes e níveis do personagem -->
+    <div class="classes">
+      <h2>Classes</h2>
+      <ul>
+        <!-- ITENS DA LISTA - Cada linha representa uma classe -->
+        <li>⚔️ Cavaleiro <span>Nv 2</span></li>
+        <li>✨ Mago <span>Nv 5</span></li>
+        <li>🔱 Artificer <span>Nv 5</span></li>
+        <li>💰 Mercador <span>Nv 2</span></li>
+        <li>🌟 Herói <span>Nv 2</span></li>
+      </ul>
+    </div>
+
+    <!-- SEÇÃO MEDALHAS - Grid de conquistas e medalhas -->
+    <div class="medalhas">
+      <h2>Medalhas</h2>
+      <!-- GRID DE SLOTS - 4 posições para medalhas -->
+      <div class="medalhas-grid">
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_53.png" alt="Medalha 1">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_50.png" alt="Medalha 2">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_40.png" alt="Medalha 3">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_36.png" alt="Medalha 4">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_28.png" alt="Medalha 5">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_21.png" alt="Medalha 6">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_13.png" alt="Medalha 7">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_44.png" alt="Medalha 8">
+        </div>
+        <div class="medalha-slot">
+          <img src="file:///C:/Users/MariaEduardaDaSilvaC/Desktop/semanas%206%20e%207/ChatGPT%20Image%2029%20de%20set.%20de%202025,%2018_25_57.png" alt="Medalha 9">
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO CARTAS - Sequência de cartas com ataques padronizados -->
+    <div class="cartas">
+      <h2>Cartas</h2>
+      <div class="cartas-grid">
+        <div class="carta-slot"><span class="carta">A: 11 de dano</span></div>
+        <div class="carta-slot"><span class="carta">2: 3 de dano</span></div>
+        <div class="carta-slot"><span class="carta">3: 11 de dano</span></div>
+        <div class="carta-slot"><span class="carta">4: 3 de dano</span></div>
+        <div class="carta-slot"><span class="carta">5: 11 de dano</span></div>
+        <div class="carta-slot"><span class="carta">6: 3 de dano</span></div>
+        <div class="carta-slot"><span class="carta">7: 5 de dano</span></div>
+        <div class="carta-slot"><span class="carta">8: 0 de dano</span></div>
+        <div class="carta-slot"><span class="carta">9: 5 de dano</span></div>
+        <div class="carta-slot"><span class="carta">10: 0 de dano</span></div>
+        <div class="carta-slot"><span class="carta">J: Sem efeito de relíquia</span></div>
+        <div class="carta-slot"><span class="carta">Q: Substitui o Q por qualquer carta que o jogador quiser</span></div>
+        <div class="carta-slot"><span class="carta">K: Sem efeito de relíquia</span></div>
+      </div>
+    </div>
+
+    <!-- CAMPO RETANGULAR ADICIONAL -->
+    <div class="retangulo-adicional">Campo Retangular Adicional</div>
+  </div>
+</body>
+</html>
