@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Placar</title>
+   <tr><th>Grupo</th><th>Nomes</th><th>Pontos</th></tr>
+ </table>
+ <!-- Firebase SDK -->
+ <script type="module">
+   // Importar funções do Firebase v10+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+   import { getFirestore, collection, query, orderBy, onSnapshot }
+     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+   // Configuração do Firebase
+   const firebaseConfig = {
+     apiKey: "AIzaSyBcS-Q8uqkIgH--Uq5MmkfbkarHVrq2j3Y",
+     authDomain: "placar-da-semana.firebaseapp.com",
+     projectId: "placar-da-semana",
+     storageBucket: "placar-da-semana.firebasestorage.app",
+     messagingSenderId: "890475835587",
+     appId: "1:890475835587:web:fde9c537ea1a4f7e29f276",
+     measurementId: "G-KQNWK82FPV"
+   };
+   // Inicializar Firebase e Firestore
+   const app = initializeApp(firebaseConfig);
+   const db = getFirestore(app);
+   // Query ordenada por pontos
+   const q = query(collection(db, "placar"), orderBy("pontos", "desc"));
+   // Escutar mudanças em tempo real
+   onSnapshot(q, (snapshot) => {
+     const tabela = document.getElementById("placar");
+     tabela.innerHTML = "<tr><th>Grupo</th><th>Nomes</th><th>Pontos</th></tr>";
+     snapshot.forEach((doc) => {
+       const dado = doc.data();
+       tabela.innerHTML += `<tr><td>${dado.grupo}</td><td>${dado.nomes}</td><td>${dado.pontos}</td></tr>`;
+     });
+   });
+ </script>
+</body>
+</html>
